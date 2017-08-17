@@ -20,7 +20,9 @@ defmodule PumpkinWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", PumpkinWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", PumpkinWeb do
+    pipe_through :api
+
+    resources "/occurrences", OccurrenceController, only: [:create, :show]
+  end
 end
