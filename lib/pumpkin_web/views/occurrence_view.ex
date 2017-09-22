@@ -9,6 +9,7 @@ defmodule PumpkinWeb.OccurrenceView do
   def render("occurrence.json", %{occurrence: occurrence}) do
     %{
       id: occurrence.id,
+      environment_id: occurrence.environment_id,
       message: occurrence.message,
       occurred_at: occurrence.occurred_at,
       data: occurrence.data

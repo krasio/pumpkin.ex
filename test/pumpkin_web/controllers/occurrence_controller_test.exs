@@ -5,13 +5,19 @@ defmodule PumpkinWeb.OccurenceControllerTest do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
   end
 
-  @create_attrs %{data: %{}, message: "Ooops, something went wrong!", occurred_at: ~N[2010-04-17 14:25:34.000000]}
-  @invalid_attrs %{data: nil, message: nil, occurred_at: nil}
+  @create_attrs %{
+    environment_id: "pumpkin-staging",
+    message: "Ooops, something went wrong!",
+    occurred_at: ~N[2010-04-17 14:25:34.000000],
+    data: %{}
+  }
+
+  @invalid_attrs %{data: nil, message: nil, occurred_at: nil, environment_id: ""}
 
   describe "create/2" do
     test "renders occurrence when data is valid", %{conn: conn} do
       conn = post(conn, occurrence_path(conn, :create), occurrence: @create_attrs)
-      response =  json_response(conn, 201)
+      response = json_response(conn, 201)
       %{"id" => id} = response
 
       # Example response from the Rails app
@@ -24,6 +30,7 @@ defmodule PumpkinWeb.OccurenceControllerTest do
 
       assert %{
         "id" => id,
+        "environment_id" => "pumpkin-staging",
         "message" => "Ooops, something went wrong!",
         "occurred_at" => "2010-04-17T14:25:34.000000",
         "data" => %{}
@@ -37,7 +44,10 @@ defmodule PumpkinWeb.OccurenceControllerTest do
       conn = post(conn, occurrence_path(conn, :create), occurrence: @invalid_attrs)
       response = json_response(conn, 422)
 
-      assert response["errors"] != %{}
+      errors = %{"data" => ["can't be blank"], "environment_id" => ["can't be blank"],
+        "message" => ["can't be blank"], "occurred_at" => ["can't be blank"]}
+
+      assert errors == response["errors"]
       assert [] = get_resp_header(conn, "location")
     end
   end
