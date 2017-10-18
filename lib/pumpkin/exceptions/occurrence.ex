@@ -1,6 +1,7 @@
 defmodule Pumpkin.Exceptions.Occurrence do
   use Ecto.Schema
   import Ecto.Changeset
+  import Ecto.Query, warn: false
   alias Pumpkin.Exceptions.Occurrence
   alias Pumpkin.Exceptions.Environment
 
@@ -12,6 +13,7 @@ defmodule Pumpkin.Exceptions.Occurrence do
     field :occurred_at, :naive_datetime
 
     belongs_to :environment, Environment, type: :string
+    belongs_to :bug, Bug
 
     timestamps()
   end
@@ -19,7 +21,16 @@ defmodule Pumpkin.Exceptions.Occurrence do
   @doc false
   def changeset(%Occurrence{} = occurrence, attrs) do
     occurrence
-    |> cast(attrs, [:environment_id, :message, :occurred_at, :data])
+    |> cast(attrs, [:environment_id, :bug_id, :message, :occurred_at, :data])
     |> validate_required([:environment_id, :message, :occurred_at, :data])
+  end
+
+  def get_with_lock(id) do
+    from(
+      o in Occurrence,
+      where: o.id == ^id,
+      lock: "FOR UPDATE"
+    )
+    |> Pumpkin.Repo.one
   end
 end

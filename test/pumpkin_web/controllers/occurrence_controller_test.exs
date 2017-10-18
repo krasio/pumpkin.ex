@@ -18,7 +18,6 @@ defmodule PumpkinWeb.OccurenceControllerTest do
     test "renders occurrence when data is valid", %{conn: conn} do
       conn = post(conn, occurrence_path(conn, :create), occurrence: @create_attrs)
       response = json_response(conn, 201)
-      %{"id" => id} = response
 
       # Example response from the Rails app
       # {"id"=>"4e6c2d86-44b2-4194-8107-8be8376f5af3",
@@ -28,9 +27,11 @@ defmodule PumpkinWeb.OccurenceControllerTest do
       # "message"=>"Extremely normal",
       # "data"=>{}}
 
+      assert %{"id" => id, "bug_id" => bug_id} = response
       assert %{
         "id" => id,
         "environment_id" => "pumpkin-staging",
+        "bug_id" => bug_id,
         "message" => "Ooops, something went wrong!",
         "occurred_at" => "2010-04-17T14:25:34.000000",
         "data" => %{}

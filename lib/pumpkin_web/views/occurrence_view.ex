@@ -10,6 +10,7 @@ defmodule PumpkinWeb.OccurrenceView do
     %{
       id: occurrence.id,
       environment_id: occurrence.environment_id,
+      bug_id: occurrence.bug_id,
       message: occurrence.message,
       occurred_at: occurrence.occurred_at,
       data: occurrence.data
