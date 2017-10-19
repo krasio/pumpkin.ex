@@ -1,0 +1,8 @@
+{
+  "occurrence": {
+    "environment_id": "pumpking-staging",
+    "message": "Ooops, something went wrong!",
+    "occurred_at": "2014-10-20T12:30:35.000Z",
+    "data": {"file": "/some/buggy/file.ex", "line": 23}
+  }
+}
