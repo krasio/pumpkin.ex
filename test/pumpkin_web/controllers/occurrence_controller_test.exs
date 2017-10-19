@@ -1,5 +1,5 @@
 defmodule PumpkinWeb.OccurenceControllerTest do
-  use PumpkinWeb.ConnCase, async: true
+  use PumpkinWeb.ConnCase, async: false
 
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}

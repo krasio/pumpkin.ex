@@ -1,3 +1,3 @@
 defmodule PumpkinWeb.PageViewTest do
-  use PumpkinWeb.ConnCase, async: true
+  use PumpkinWeb.ConnCase, async: false
 end
