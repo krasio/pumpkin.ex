@@ -14,7 +14,20 @@ defmodule PumpkinWeb.OccurenceControllerTest do
 
   @invalid_attrs %{data: nil, message: nil, occurred_at: nil, environment_id: ""}
 
-  describe "create/2" do
+  defp with_valid_auth_token(%{conn: conn}) do
+    {:ok, conn: put_req_header(conn, "authorization", Application.get_env(:pumpkin, :auth_token))}
+  end
+
+  describe "create/2 when not authenticated" do
+    test "responds with 401 Unautheticated", %{conn: conn} do
+      conn = post(conn, occurrence_path(conn, :create), occurrence: @create_attrs)
+      assert response(conn, 401) == "unauthorized"
+    end
+  end
+
+  describe "create/2 when authenticated" do
+    setup [:with_valid_auth_token]
+
     test "renders occurrence when data is valid", %{conn: conn} do
       conn = post(conn, occurrence_path(conn, :create), occurrence: @create_attrs)
       response = json_response(conn, 201)

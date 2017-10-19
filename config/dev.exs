@@ -58,3 +58,4 @@ config :pumpkin, Pumpkin.Repo,
   pool_size: 10
 
 config :pumpkin, :task_supervisor, Task.Supervisor
+config :pumpkin, :auth_token, "secret"

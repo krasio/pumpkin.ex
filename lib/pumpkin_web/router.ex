@@ -11,6 +11,7 @@ defmodule PumpkinWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug PumpkinWeb.ApiAuth, token: Application.get_env(:pumpkin, :auth_token)
   end
 
   scope "/", PumpkinWeb do

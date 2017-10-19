@@ -19,3 +19,4 @@ config :pumpkin, Pumpkin.Repo,
   pool: Ecto.Adapters.SQL.Sandbox
 
 config :pumpkin, :task_supervisor, Pumpkin.TestTaskSupervisor
+config :pumpkin, :auth_token, "secret"
