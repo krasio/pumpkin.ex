@@ -17,3 +17,5 @@ config :pumpkin, Pumpkin.Repo,
   database: "pumpkin_ex_test",
   # hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+config :pumpkin, :task_supervisor, Pumpkin.TestTaskSupervisor

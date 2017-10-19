@@ -12,6 +12,7 @@ defmodule Pumpkin.Application do
       supervisor(Pumpkin.Repo, []),
       # Start the endpoint when the application starts
       supervisor(PumpkinWeb.Endpoint, []),
+      supervisor(Task.Supervisor, [[name: Pumpkin.Exceptions.AssignToBugSupervisor]])
       # Start your own worker by calling: Pumpkin.Worker.start_link(arg1, arg2, arg3)
       # worker(Pumpkin.Worker, [arg1, arg2, arg3]),
     ]

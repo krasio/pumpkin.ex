@@ -6,12 +6,15 @@ defmodule PumpkinWeb.OccurrenceController do
 
   action_fallback PumpkinWeb.FallbackController
 
+  @task_supervisor Application.get_env(:pumpkin, :task_supervisor)
+
   def create(conn, %{"occurrence" => params}) do
     attrs = occurrence_attrs(params)
 
-    with {:ok, %Occurrence{} = occurrence} <- Exceptions.create_occurrence(attrs),
-         {:ok, %Occurrence{} = occurrence} <- Exceptions.assign_bug(occurrence)
+    with {:ok, %Occurrence{} = occurrence} <- Exceptions.create_occurrence(attrs)
     do
+      async_assign_bug(occurrence)
+
       conn
       |> put_status(:created)
       |> put_resp_header("location", occurrence_path(conn, :show, occurrence))
@@ -26,5 +29,12 @@ defmodule PumpkinWeb.OccurrenceController do
       occurred_at: params["occurred_at"],
       data: params["data"],
     }
+  end
+
+  defp async_assign_bug(occurrence) do
+    @task_supervisor.start_child(
+      Pumpkin.Exceptions.AssignToBugSupervisor,
+      Exceptions.Tasks, :assign_bug, [occurrence]
+    )
   end
 end

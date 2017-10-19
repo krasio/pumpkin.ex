@@ -56,3 +56,5 @@ config :pumpkin, Pumpkin.Repo,
   database: "pumpkin_ex_dev",
   # hostname: "localhost",
   pool_size: 10
+
+config :pumpkin, :task_supervisor, Task.Supervisor
