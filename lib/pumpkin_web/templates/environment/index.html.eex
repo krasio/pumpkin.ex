@@ -1,0 +1,8 @@
+<div>
+  <h4>Environments</h4>
+  <ul>
+    <%= for environment <- @environments do %>
+      <li><%= environment.id  %> (<%= environment.bugs_count %>)</li>
+    <% end %>
+  </ul>
+</div>
