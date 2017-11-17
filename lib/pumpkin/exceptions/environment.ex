@@ -2,7 +2,6 @@ defmodule Pumpkin.Exceptions.Environment do
   use Ecto.Schema
   import Ecto.Changeset
   import Ecto.Query, warn: false
-  alias Pumpkin.Repo
   alias Pumpkin.Exceptions.Environment
   alias Pumpkin.Exceptions.Occurrence
 

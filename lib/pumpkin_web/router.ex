@@ -17,7 +17,9 @@ defmodule PumpkinWeb.Router do
   scope "/", PumpkinWeb do
     pipe_through :browser # Use the default browser stack
 
-    resources "/environments", EnvironmentController, only: [:index]
+    resources "/environments", EnvironmentController, only: [:index] do
+      resources "/bugs", BugController, only: [:index]
+    end
     get "/", PageController, :index
   end
 

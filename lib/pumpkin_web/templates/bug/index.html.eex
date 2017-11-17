@@ -1,0 +1,12 @@
+<div>
+  <h4><%= @environment.id %></h4>
+  <ul>
+    <%= for bug <- @bugs do %>
+      <li>
+        <%= bug.message %> (<%= bug.occurrences_count %>) </br>
+        <%= started_at(bug.first_occurred_at) %></br>
+        <%= last_seen_at(bug.last_occurred_at) %></br>
+      </li>
+    <% end %>
+  </ul>
+</div>

@@ -14,6 +14,11 @@ defmodule Pumpkin.Exceptions.Bug do
     has_many :occurrences, Occurrence
 
     timestamps()
+
+    field :message, :string, virtual: true
+    field :first_occurred_at, :naive_datetime, virtual: true
+    field :last_occurred_at, :naive_datetime, virtual: true
+    field :occurrences_count, :integer, virtual: true
   end
 
   @doc false
@@ -39,5 +44,17 @@ defmodule Pumpkin.Exceptions.Bug do
     from b in query,
       join: o in assoc(b, :primary_occurrence),
       where: o.message == ^message
+  end
+
+  def for_environment(query, environment) do
+    from b in query,
+      join: po in assoc(b, :primary_occurrence),
+      where: po.environment_id == ^environment.id,
+      select: %{b |
+        message: po.message,
+        first_occurred_at: po.occurred_at,
+        last_occurred_at: fragment("(SELECT MAX(occurred_at) FROM occurrences WHERE bug_id = ? AND environment_id = ?) AS last_occurred_at", b.id, ^environment.id),
+        occurrences_count: fragment("(SELECT count(1) FROM occurrences WHERE bug_id = ? AND environment_id = ?) AS occurrences_count", b.id, ^environment.id)
+      }
   end
 end
