@@ -1,6 +1,6 @@
 # Pumpkin.Ex
 
-Pumpkin.Ex is a toy project to rewrite [fluxfederation/pumpkin](https://github.com/fluxfederation/pumpkin) in Elexir and Phoenix as a learning excercise.
+Pumpkin.Ex is a toy project to rewrite [fluxfederation/pumpkin](https://github.com/fluxfederation/pumpkin) in Elixir and Phoenix as a learning excercise.
 
 Written in my 10% time at [Flux / Powershop](https://github.com/fluxfederation).
 
